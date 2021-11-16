@@ -4,13 +4,13 @@ from bs4 import BeautifulSoup
 weather = "https://weather.com/weather/monthly/l/60eb7796d033a593c3294ffa7d76578ee16343ee1b14bbab570b30eee2a0fb0e"
 yelpAPI = "ivTLzvNEFKorlR5CDuV6p9Qe_wIOrN0-vvnCedopKB-aXWGH1HVBtloCk1mFIVfSHNw65eG0BR_iQaOC2ydW-H2_IV_0GxpMTXVQOTH5Z_pfOfKnqMgNzsrHuXaTYXYx"
 yelpBusinessURL = "https://api.yelp.com/v3/businesses/search"
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route("/", methods = ["GET"])
+@application.route("/", methods = ["GET"])
 def home():
     return "<h1>Hello there<h1/>"
 
-@app.route("/scraper", methods = ["GET"])
+@application.route("/scraper", methods = ["GET"])
 def scraper():
     page = requests.get(weather)
     parsedPage = BeautifulSoup(page.content, "html.parser")
@@ -26,7 +26,7 @@ def scraper():
         })
     return jsonify(tempDic)
 
-@app.route("/api", methods = ["GET"])
+@application.route("/api", methods = ["GET"])
 def api():
     headers = {"Authorization": ("Bearer " + yelpAPI)}
     params = {"term": "restaurant", "location":"Eugene"}
@@ -41,4 +41,4 @@ def api():
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
